@@ -111,6 +111,8 @@ public class Client {
                 textField.setEditable(true);
             } else if (line.startsWith("MESSAGE")) {
                 messageArea.append(line.substring(8) + "\n");
+                messageArea.setCaretPosition(messageArea.getDocument().getLength());
+                
             }
         }
     }
