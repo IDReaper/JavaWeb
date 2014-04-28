@@ -16,10 +16,11 @@ import java.io.IOException;
 **/
 public class Server
 {
-	//Set the port number to listen on and create sets of clients and their print writers
+	//Set the port number to listen on and create sets of clients and their print writers, and a set of client messages
 	private static final int listenPORT = 9001;
 	private static HashSet<String> nameSet = new HashSet<String>();
 	private static HashSet<PrintWriter> writerSet = new HashSet<PrintWriter>();
+	private static HashSet<String> serverLog = new HashSet<String>();
 	
 	//Listens on a port and creates new threads for clients
 	public static void main(String [] args) throws Exception
@@ -43,6 +44,7 @@ public class Server
 	{
 		private Socket clientSocket;
 		private String clientName;
+		
 		private BufferedReader input;
 		private PrintWriter output;
 		
@@ -89,11 +91,23 @@ public class Server
 				while (true)
 				{
 					String clientInput = input.readLine();
-					if (clientInput != null)
+					if (clientInput != "")
 					{
 						for (PrintWriter writer : writerSet)
 						{
 							writer.println("Message " + clientName + ": " + clientInput);
+							serverLog.add("Message " + clientName + ": " + clientInput);
+						}
+						//Prints client message history to output stream
+						if (clientInput.endsWith("/log"))
+						{
+							output.println("START OF LOG");
+							for(String string : serverLog)
+							{
+								output.println(string);
+								
+							}
+							output.println("END OF LOG");
 						}
 					}
 				}
