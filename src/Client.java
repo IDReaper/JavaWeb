@@ -11,6 +11,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * Chat client using jswing for a simple gui
+ * interface. Requests a server ip and name
+ * before messages may be sent to the server.
+ * A chat log may be requested and the client
+ * can be exited. Socket is closed server side.
+ **/
 public class Client 
 {
 
@@ -103,6 +110,7 @@ public class Client
         }
     }
 
+    //Creates and runs the client instance
     public static void main(String[] args) throws Exception 
     {
         Client client = new Client();
